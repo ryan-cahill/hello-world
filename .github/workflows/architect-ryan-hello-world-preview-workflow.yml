@@ -16,7 +16,7 @@ env:
   PREVIEW_PREFIX: preview-
   PREVIEW_TAG: preview-${{ github.event.number }}
   PREVIEW_MAINLINE_BRANCH: master
-  COMPONENT_FILE_PATH: architect/architect.yml
+  COMPONENT_FILE_PATH: docker-compose.yml
   ARCHITECT_ACCOUNT: architect-ryan
   PLATFORM_NAME: architect
   COMPONENT_NAME: hello-world
@@ -33,6 +33,10 @@ jobs:
           node-version: '14'
       - name: Install Architect CLI
         run: sudo npm install -g @architect-io/cli
+      - name: Set Architect API endpoint
+        run: architect config:set api_host https://api.dev.architect.io
+      - name: Set Architect registry endpoint
+        run: architect config:set registry_host registry.dev.architect.io
       - name: Login to Architect Cloud
         run: architect login -e ${{ secrets.ARCHITECT_EMAIL }} -p ${{ secrets.ARCHITECT_PASSWORD }}
       - name: Remove preview environment
@@ -47,6 +51,10 @@ jobs:
           node-version: '14'
       - name: Install Architect CLI
         run: sudo npm install -g @architect-io/cli
+      - name: Set Architect API endpoint
+        run: architect config:set api_host https://api.dev.architect.io
+      - name: Set Architect registry endpoint
+        run: architect config:set registry_host registry.dev.architect.io
       - name: Login to Architect Cloud
         run: architect login -e ${{ secrets.ARCHITECT_EMAIL }} -p ${{ secrets.ARCHITECT_PASSWORD }} # These secrets were created on your behalf
       - name: Register component w/ Architect
