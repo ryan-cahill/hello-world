@@ -55,12 +55,14 @@ workflows:
   create-preview-workflow:
     # when: << pipeline.parameters.GHA_Action >> # TODO: uncomment to avoid circleci workflow running on all pushes
     when:
-      equal: [ open, << pipeline.parameters.GHA_Meta >>]
+      # equal: [ open, << pipeline.parameters.GHA_Meta >>]
+      equal: [ "release", << pipeline.parameters.GHA_Event >>]
     jobs: # TODO: consider adding Docker Layer Caching
       - create-preview
   destroy-preview-workflow:
     # when: << pipeline.parameters.GHA_Action >> # TODO: uncomment to avoid circleci workflow running on all pushes
     when:
-      equal: [ closed, << pipeline.parameters.GHA_Meta >>]
+      # equal: [ closed, << pipeline.parameters.GHA_Meta >>]
+      equal: [ "release", << pipeline.parameters.GHA_Event >>]
     jobs: # TODO: consider adding Docker Layer Caching
       - destroy-preview
