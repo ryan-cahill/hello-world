@@ -16,11 +16,11 @@ jobs:
           name: Log in to Architect
           command: architect login # environment variables are set in the UI
       - run:
-          name: Register component
-          command: architect register architect.yml
+          name: Create environment
+          command: architect environment:create $CIRCLE_BRANCH --cluster architect # TODO: set cluster as a project var
       - run:
           name: Deploy component
-          command: architect deploy architect.yml --auto-approve
+          command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
 
 workflows:
   preview-workflow:
