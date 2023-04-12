@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   create-preview:
     docker:
-      - image: ubuntu-2204:2023.02.1
+      - image: cimg/ubuntu-2204:2023.02.1
     steps:
       - checkout
       - run:
