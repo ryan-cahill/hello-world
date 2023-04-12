@@ -1,0 +1,19 @@
+name: Preview environment destroy trigger
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  architect_create_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Trigger CircleCI Pipeline
+        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.7
+        env:
+          CCI_TOKEN: ${{ secrets.CCI_TOKEN }} # needs to be set in github actions variables
