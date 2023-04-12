@@ -3,9 +3,11 @@ version: 2.1
 jobs:
   create-preview:
     docker:
-      - image: cimg/ubuntu-2204:2023.02.1
+      - image: cimg/node:18.14.1
     steps:
       - checkout
+      - run:
+          command: which docker
       - run:
           name: Install Archiect CLI
           command: npm install -g @architect-io/cli
