@@ -6,6 +6,8 @@ jobs:
       - image: cimg/node:18.14.1
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.14
       - run:
           command: which docker
       - run:
