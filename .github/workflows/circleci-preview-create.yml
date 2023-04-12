@@ -3,7 +3,7 @@ name: Preview environment create trigger
 on:
   pull_request:
     branches:
-      - main
+      - master # TODO: change to main
 
 jobs:
   architect_create_preview:

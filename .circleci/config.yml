@@ -23,22 +23,18 @@ jobs:
       - setup_remote_docker:
           version: 20.10.18
           # docker_layer_caching: true
-      - run: echo << pipeline.parameters.GHA_Actor >>
-      - run: echo << pipeline.parameters.GHA_Action >>
-      - run: echo << pipeline.parameters.GHA_Event >>
-      - run: echo << pipeline.parameters.GHA_Meta >>
-      # - run: # TODO: uncomment
-      #     name: Install Archiect CLI
-      #     command: npm install -g @architect-io/cli
-      # - run:
-      #     name: Log in to Architect
-      #     command: architect login # environment variables are set in the UI
-      # - run:
-      #     name: Create environment
-      #     command: architect environment:create $CIRCLE_BRANCH --cluster architect # TODO: set cluster as a project var
-      # - run:
-      #     name: Deploy component
-      #     command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
+      - run: # TODO: uncomment
+          name: Install Archiect CLI
+          command: npm install -g @architect-io/cli
+      - run:
+          name: Log in to Architect
+          command: architect login # environment variables are set in the UI
+      - run:
+          name: Create environment
+          command: architect environment:create $CIRCLE_BRANCH --cluster architect # TODO: set cluster as a project var
+      - run:
+          name: Deploy component
+          command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
   destroy-preview:
     docker:
       - image: cimg/node:18.14.1
