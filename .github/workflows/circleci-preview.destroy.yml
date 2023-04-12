@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger CircleCI Pipeline
-        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
+        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.7
         env:
           CCI_TOKEN: ${{ secrets.CCI_TOKEN }} # needs to be set in github actions variables
         # with:
