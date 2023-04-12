@@ -10,8 +10,6 @@ jobs:
           version: 20.10.18
           # docker_layer_caching: true
       - run:
-          command: which docker
-      - run:
           name: Install Archiect CLI
           command: npm install -g @architect-io/cli
       - run:
@@ -20,6 +18,9 @@ jobs:
       - run:
           name: Register component
           command: architect register architect.yml
+      - run:
+          name: Deploy component
+          command: architect deploy architect.yml --auto-approve
 
 workflows:
   preview-workflow:
