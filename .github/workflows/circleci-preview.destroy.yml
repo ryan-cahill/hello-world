@@ -14,4 +14,4 @@ jobs:
         env:
           CCI_TOKEN: ${{ secrets.CCI_TOKEN }} # this PERSONAL ACCESS TOKEN needs to be set in github actions variables
         with:
-          GHA_Meta: ${{ github.event.number }}
+          GHA_Meta: ${{ github.event.number }} # no other way to get this number in circleci when pr is merged
