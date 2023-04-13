@@ -9,9 +9,9 @@ jobs:
   architect_create_preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger CircleCI Pipeline
-        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.7
-        env:
-          CCI_TOKEN: ${{ secrets.CCI_TOKEN }} # this PERSONAL ACCESS TOKEN needs to be set in github actions variables
-        with:
-          GHA_Meta: ARC_CREATE_PREVIEW
+      # - name: Trigger CircleCI Pipeline
+      #   uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.7
+      #   env:
+      #     CCI_TOKEN: ${{ secrets.CCI_TOKEN }} # this PERSONAL ACCESS TOKEN needs to be set in github actions variables
+      #   with:
+      #     GHA_Meta: ARC_CREATE_PREVIEW
