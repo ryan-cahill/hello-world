@@ -57,10 +57,10 @@ jobs:
           command: architect login # environment variables are set in the UI
       - run:
           name: Destroy component
-          command: architect destroy --environment $CIRCLE_BRANCH --auto-approve
+          command: architect destroy --environment << pipeline.parameters.GHA_Meta >> --auto-approve
       - run:
           name: Destroy environment
-          command: architect environment:destroy $CIRCLE_BRANCH --auto-approve
+          command: architect environment:destroy << pipeline.parameters.GHA_Meta >> --auto-approve
 
 workflows:
   create-preview-workflow:
