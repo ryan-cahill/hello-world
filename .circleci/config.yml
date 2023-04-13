@@ -67,17 +67,11 @@ jobs:
 workflows:
   create-preview-workflow:
     when:
-      equal: [ opened, << pipeline.parameters.GHA_Meta >>]
-    # when:
-      # equal: [ open, << pipeline.parameters.GHA_Meta >>]
-      # equal: [ "pull_request", << pipeline.parameters.GHA_Event >>]
+      equal: [ open, << pipeline.parameters.GHA_Meta >>]
     jobs: # TODO: consider adding Docker Layer Caching
       - create-preview
   destroy-preview-workflow:
     when:
       equal: [ closed, << pipeline.parameters.GHA_Meta >>]
-    # when:
-      # equal: [ closed, << pipeline.parameters.GHA_Meta >>]
-      # equal: [ "pull_request", << pipeline.parameters.GHA_Event >>]
     jobs: # TODO: consider adding Docker Layer Caching
       - destroy-preview
