@@ -1,13 +1,7 @@
 version: 2.1
 
-parameters: # TODO: clean up?
-  GHA_Actor:
-    type: string
-    default: ""
+parameters:
   GHA_Action:
-    type: string
-    default: ""
-  GHA_Event:
     type: string
     default: ""
   GHA_Meta:
@@ -24,7 +18,7 @@ jobs:
     steps:
       - run: # TODO: set cluster as a project var
           name: Create environment
-          command: architect environment:create preview-$PR_NUMBER --cluster architect --ttl=1d
+          command: architect environment:create preview-$PR_NUMBER --ttl=1d
       - run:
           name: Deploy component
           command: architect deploy architect.yml --auto-approve -e preview-$PR_NUMBER
@@ -43,7 +37,7 @@ jobs:
     - checkout
     - setup_remote_docker:
         version: 20.10.18
-        # docker_layer_caching: true
+        docker_layer_caching: true
     - run:
         command: |
           export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
