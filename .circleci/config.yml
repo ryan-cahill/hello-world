@@ -23,9 +23,10 @@ jobs:
     <<: *job_common
     steps:
       - run:
-        command: |
-          export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
-          echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
+          name: Set up PR number environment variable
+          command: |
+            export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
+            echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
       - run:
           name: Create environment
           command: architect environment:create preview-$PR_NUMBER --ttl=1d
@@ -36,9 +37,10 @@ jobs:
     <<: *job_common
     steps:
       - run:
-        command: |
-          export PR_NUMBER=<< pipeline.parameters.GHA_Meta >>
-          echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
+          name: Set up PR number environment variable
+          command: |
+            export PR_NUMBER=<< pipeline.parameters.GHA_Meta >>
+            echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
       - run:
           name: Destroy component
           command: architect destroy --environment preview-$PR_NUMBER --auto-approve
