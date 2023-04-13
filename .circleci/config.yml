@@ -61,7 +61,7 @@ workflows:
       and:
         - equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
         - << pipeline.parameters.GHA_Action >>
-    jobs: # TODO: consider adding Docker Layer Caching
+    jobs:
       - create_preview:
           <<: *pre_job_common
   destroy_preview_workflow:
@@ -70,6 +70,6 @@ workflows:
         - not:
             equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
         - << pipeline.parameters.GHA_Action >>
-    jobs: # TODO: consider adding Docker Layer Caching
+    jobs:
       - destroy_preview:
           <<: *pre_job_common
