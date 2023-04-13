@@ -22,6 +22,7 @@ jobs:
   create_preview:
     <<: *job_common
     steps:
+      - run: echo 'done'
       # - run: # TODO: set cluster as a project var
       #     name: Create environment
       #     command: architect environment:create preview-$PR_NUMBER --ttl=1d
@@ -31,6 +32,7 @@ jobs:
   destroy_preview:
     <<: *job_common
     steps:
+      - run: echo 'done'
       # - run:
       #     name: Destroy component
       #     command: architect destroy --environment preview-$PR_NUMBER --auto-approve
