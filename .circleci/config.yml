@@ -22,38 +22,45 @@ jobs:
   create_preview:
     <<: *job_common
     steps:
-      - run: # TODO: set cluster as a project var
-          name: Create environment
-          command: architect environment:create preview-$PR_NUMBER --ttl=1d
-      - run:
-          name: Deploy component
-          command: architect deploy architect.yml --auto-approve -e preview-$PR_NUMBER
+      - run: echo 'done'
+      # - run: # TODO: set cluster as a project var
+      #     name: Create environment
+      #     command: architect environment:create preview-$PR_NUMBER --ttl=1d
+      # - run:
+      #     name: Deploy component
+      #     command: architect deploy architect.yml --auto-approve -e preview-$PR_NUMBER
   destroy_preview:
     <<: *job_common
     steps:
-      - run:
-          name: Destroy component
-          command: architect destroy --environment preview-$PR_NUMBER --auto-approve
-      - run:
-          name: Destroy environment
-          command: architect environment:destroy preview-$PR_NUMBER --auto-approve
+      - run: echo 'done'
+      # - run:
+      #     name: Destroy component
+      #     command: architect destroy --environment preview-$PR_NUMBER --auto-approve
+      # - run:
+      #     name: Destroy environment
+      #     command: architect environment:destroy preview-$PR_NUMBER --auto-approve
 
 .pre_job_common: &pre_job_common
   pre-steps:
     - checkout
-    - setup_remote_docker:
-        version: 20.10.18
-        docker_layer_caching: true
+    # - setup_remote_docker:
+    #     version: 20.10.18
+    #     docker_layer_caching: true
     - run:
         command: |
           export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
           echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
-    - run:
-        name: Install Architect CLI
-        command: npm install -g @architect-io/cli
-    - run:
-        name: Log in to Architect
-        command: architect login # environment variables are set in the UI
+    - run: echo << pipeline.git.branch >>
+    - run: echo $PR_NUMBER
+    - run: echo $CIRCLE_BRANCH
+    - run: echo $CIRCLE_PR_NUMBER
+    - run: echo $CIRCLE_PULL_REQUEST
+    # - run:
+    #     name: Install Architect CLI
+    #     command: npm install -g @architect-io/cli
+    # - run:
+    #     name: Log in to Architect
+    #     command: architect login # environment variables are set in the UI
 
 workflows:
   create_preview_workflow:
