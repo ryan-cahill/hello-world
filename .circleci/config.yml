@@ -24,28 +24,29 @@ jobs:
       - image: cimg/node:18.14.1
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.18
-          # docker_layer_caching: true
-      - run: # TODO: uncomment
-          name: Install Architect CLI
-          command: npm install -g @architect-io/cli
-      - run:
-          name: Log in to Architect
-          command: architect login # environment variables are set in the UI
-      - run: # TODO: set cluster as a project var
-          name: Create environment
-          command: architect environment:create $CIRCLE_BRANCH --cluster architect --ttl=1d
-      - run:
-          name: Deploy component
-          command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
+      - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
+  #     - setup_remote_docker:
+  #         version: 20.10.18
+  #         # docker_layer_caching: true
+  #     - run: # TODO: uncomment
+  #         name: Install Architect CLI
+  #         command: npm install -g @architect-io/cli
+  #     - run:
+  #         name: Log in to Architect
+  #         command: architect login # environment variables are set in the UI
+  #     - run: # TODO: set cluster as a project var
+  #         name: Create environment
+  #         command: architect environment:create $CIRCLE_BRANCH --cluster architect --ttl=1d
+  #     - run:
+  #         name: Deploy component
+  #         command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
   destroy-preview:
     # <<: *job_common
     docker:
       - image: cimg/node:18.14.1
     steps:
       - checkout
-      - run: echo << pipeline.parameters.GHA_Meta >>
+      - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
       # - setup_remote_docker:
       #     version: 20.10.18
       #     # docker_layer_caching: true
