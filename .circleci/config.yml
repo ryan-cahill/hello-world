@@ -24,9 +24,13 @@ jobs:
       - image: cimg/node:18.14.1
     steps:
       - checkout
-      - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
-      - run: echo $CIRCLE_BRANCH # TODO: remove
+      # - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
+      # - run: echo $CIRCLE_BRANCH # TODO: remove
       - run: echo << pipeline.git.branch >> # TODO: remove
+          command: |
+            export PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/[^0-9]*//g')
+            echo 'export PR_NUMBER=<< pipeline.git.branch >>' >> "$BASH_ENV"
+      - run: echo $PR_NUMBER
       # - setup_remote_docker:
       #     version: 20.10.18
       #     # docker_layer_caching: true
@@ -48,7 +52,7 @@ jobs:
       - image: cimg/node:18.14.1
     steps:
       - checkout
-      - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
+      # - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
       - run: echo << pipeline.git.branch >> # TODO: remove
       # - setup_remote_docker:
       #     version: 20.10.18
