@@ -7,6 +7,12 @@ parameters:
   GHA_Meta:
     type: string
     default: ""
+  GHA_Actor:
+    type: string
+    default: ""
+  GHA_Event:
+    type: string
+    default: ""
 
 .job_common: &job_common
   docker:
