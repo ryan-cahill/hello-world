@@ -15,23 +15,23 @@ parameters: # TODO: clean up?
     default: ""
 
 .job_common: &job_common
-docker:
-    - image: cimg/node:18.14.1
-  steps:
-    - checkout
-    - run:
-        command: |
-          export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
-          echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
-    - setup_remote_docker:
-        version: 20.10.18
-        # docker_layer_caching: true
-    - run: # TODO: uncomment
-        name: Install Architect CLI
-        command: npm install -g @architect-io/cli
-    - run:
-        name: Log in to Architect
-        command: architect login # environment variables are set in the UI
+  docker:
+      - image: cimg/node:18.14.1
+    steps:
+      - checkout
+      - run:
+          command: |
+            export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
+            echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
+      - setup_remote_docker:
+          version: 20.10.18
+          # docker_layer_caching: true
+      - run: # TODO: uncomment
+          name: Install Architect CLI
+          command: npm install -g @architect-io/cli
+      - run:
+          name: Log in to Architect
+          command: architect login # environment variables are set in the UI
 
 jobs:
   create-preview:
