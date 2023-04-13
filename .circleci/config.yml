@@ -27,6 +27,7 @@ jobs:
       # - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
       # - run: echo $CIRCLE_BRANCH # TODO: remove
       - run: echo << pipeline.git.branch >> # TODO: remove
+      - run:
           command: |
             export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
             echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
