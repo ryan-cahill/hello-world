@@ -71,8 +71,10 @@ workflows:
       - create-preview
   destroy-preview-workflow:
     when:
-      not:
-        equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
+      and:
+        - not:
+            equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
+        - << pipeline.parameters.GHA_Action >>
       # and: << pipeline.parameters.GHA_Action >>
     jobs: # TODO: consider adding Docker Layer Caching
       - destroy-preview
