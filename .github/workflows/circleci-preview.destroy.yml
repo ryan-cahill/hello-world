@@ -6,7 +6,7 @@ on:
       - closed
 
 jobs:
-  architect_create_preview:
+  architect_destroy_preview:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger CircleCI Pipeline
