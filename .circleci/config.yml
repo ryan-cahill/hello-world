@@ -46,21 +46,21 @@ jobs:
     steps:
       - checkout
       - run: echo << pipeline.parameters.GHA_Meta >>
-      - setup_remote_docker:
-          version: 20.10.18
-          # docker_layer_caching: true
-      - run:
-          name: Install Architect CLI
-          command: npm install -g @architect-io/cli
-      - run:
-          name: Log in to Architect
-          command: architect login # environment variables are set in the UI
-      - run:
-          name: Destroy component
-          command: architect destroy --environment << pipeline.parameters.GHA_Meta >> --auto-approve
-      - run:
-          name: Destroy environment
-          command: architect environment:destroy << pipeline.parameters.GHA_Meta >> --auto-approve
+      # - setup_remote_docker:
+      #     version: 20.10.18
+      #     # docker_layer_caching: true
+      # - run:
+      #     name: Install Architect CLI
+      #     command: npm install -g @architect-io/cli
+      # - run:
+      #     name: Log in to Architect
+      #     command: architect login # environment variables are set in the UI
+      # - run:
+      #     name: Destroy component
+      #     command: architect destroy --environment << pipeline.parameters.GHA_Meta >> --auto-approve
+      # - run:
+      #     name: Destroy environment
+      #     command: architect environment:destroy << pipeline.parameters.GHA_Meta >> --auto-approve
 
 workflows:
   create-preview-workflow:
@@ -72,5 +72,6 @@ workflows:
     when:
       not:
         equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
+      # and: << pipeline.parameters.GHA_Action >>
     jobs: # TODO: consider adding Docker Layer Caching
       - destroy-preview
