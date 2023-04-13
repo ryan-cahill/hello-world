@@ -29,12 +29,13 @@ jobs:
       - run:
           name: Log in to Architect
           command: architect login # environment variables are set in the UI
-      - run:
-          name: Create environment
-          command: architect environment:create $CIRCLE_BRANCH --cluster architect # TODO: set cluster as a project var
-      - run:
-          name: Deploy component
-          command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
+      - run: echo $CIRCLE_BRANCH
+      # - run:
+      #     name: Create environment
+      #     command: architect environment:create $CIRCLE_BRANCH --cluster architect # TODO: set cluster as a project var
+      # - run:
+      #     name: Deploy component
+      #     command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
   destroy-preview:
     docker:
       - image: cimg/node:18.14.1
