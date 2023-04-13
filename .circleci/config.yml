@@ -68,7 +68,7 @@ workflows:
   create-preview-workflow:
     when:
       and:
-        - << pipeline.parameters.GHA_Action >> # TODO: uncomment to avoid circleci workflow running on all pushes
+        - equal: [ true, << pipeline.parameters.GHA_Action >>] # TODO: uncomment to avoid circleci workflow running on all pushes
         - equal: [ opened, << pipeline.parameters.GHA_Meta >>]
     # when:
       # equal: [ open, << pipeline.parameters.GHA_Meta >>]
@@ -78,7 +78,7 @@ workflows:
   destroy-preview-workflow:
     when:
       and:
-        - << pipeline.parameters.GHA_Action >> # TODO: uncomment to avoid circleci workflow running on all pushes
+        - equal: [ true, << pipeline.parameters.GHA_Action >>] # TODO: uncomment to avoid circleci workflow running on all pushes
         - equal: [ closed, << pipeline.parameters.GHA_Meta >>]
     # when:
       # equal: [ closed, << pipeline.parameters.GHA_Meta >>]
