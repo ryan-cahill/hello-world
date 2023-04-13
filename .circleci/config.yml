@@ -14,13 +14,13 @@ parameters: # TODO: clean up?
     type: string
     default: ""
 
-# .job_common: &job_common
+.job_common: &job_common
+  docker:
+    - image: cimg/node:18.14.1
 
 jobs:
   create_preview:
-    # <<: *job_common
-    docker:
-      - image: cimg/node:18.14.1
+    <<: *job_common
     steps:
       - run: # TODO: set cluster as a project var
           name: Create environment
@@ -29,9 +29,7 @@ jobs:
           name: Deploy component
           command: architect deploy architect.yml --auto-approve -e preview-$PR_NUMBER
   destroy_preview:
-    # <<: *job_common
-    docker:
-      - image: cimg/node:18.14.1
+    <<: *job_common
     steps:
       - run:
           name: Destroy component
