@@ -24,52 +24,50 @@ jobs:
       - image: cimg/node:18.14.1
     steps:
       - checkout
-      # - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
-      # - run: echo $CIRCLE_BRANCH # TODO: remove
-      - run: echo << pipeline.git.branch >> # TODO: remove
       - run:
           command: |
             export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
             echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
-      - run: echo $PR_NUMBER
-      # - setup_remote_docker:
-      #     version: 20.10.18
-      #     # docker_layer_caching: true
-      # - run: # TODO: uncomment
-      #     name: Install Architect CLI
-      #     command: npm install -g @architect-io/cli
-      # - run:
-      #     name: Log in to Architect
-      #     command: architect login # environment variables are set in the UI
-      # - run: # TODO: set cluster as a project var
-      #     name: Create environment
-      #     command: architect environment:create $CIRCLE_BRANCH --cluster architect --ttl=1d
-      # - run:
-      #     name: Deploy component
-      #     command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
+      - setup_remote_docker:
+          version: 20.10.18
+          # docker_layer_caching: true
+      - run: # TODO: uncomment
+          name: Install Architect CLI
+          command: npm install -g @architect-io/cli
+      - run:
+          name: Log in to Architect
+          command: architect login # environment variables are set in the UI
+      - run: # TODO: set cluster as a project var
+          name: Create environment
+          command: architect environment:create preview-$PR_NUMBER --cluster architect --ttl=1d
+      - run:
+          name: Deploy component
+          command: architect deploy architect.yml --auto-approve -e preview-$PR_NUMBER
   destroy-preview:
     # <<: *job_common
     docker:
       - image: cimg/node:18.14.1
     steps:
       - checkout
-      # - run: echo << pipeline.parameters.GHA_Meta >> # TODO: remove
-      - run: echo << pipeline.git.branch >> # TODO: remove
-      # - setup_remote_docker:
-      #     version: 20.10.18
-      #     # docker_layer_caching: true
-      # - run:
-      #     name: Install Architect CLI
-      #     command: npm install -g @architect-io/cli
-      # - run:
-      #     name: Log in to Architect
-      #     command: architect login # environment variables are set in the UI
-      # - run:
-      #     name: Destroy component
-      #     command: architect destroy --environment << pipeline.parameters.GHA_Meta >> --auto-approve
-      # - run:
-      #     name: Destroy environment
-      #     command: architect environment:destroy << pipeline.parameters.GHA_Meta >> --auto-approve
+      - run:
+          command: |
+            export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
+            echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
+      - setup_remote_docker:
+          version: 20.10.18
+          # docker_layer_caching: true
+      - run:
+          name: Install Architect CLI
+          command: npm install -g @architect-io/cli
+      - run:
+          name: Log in to Architect
+          command: architect login # environment variables are set in the UI
+      - run:
+          name: Destroy component
+          command: architect destroy --environment preview-$PR_NUMBER --auto-approve
+      - run:
+          name: Destroy environment
+          command: architect environment:destroy preview-$PR_NUMBER --auto-approve
 
 workflows:
   create-preview-workflow:
