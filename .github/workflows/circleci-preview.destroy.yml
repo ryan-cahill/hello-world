@@ -14,4 +14,4 @@ jobs:
         env:
           CCI_TOKEN: ${{ secrets.CCI_TOKEN }} # this PERSONAL ACCESS TOKEN needs to be set in github actions variables
         with:
-          GHA_Meta: $GITHUB_REF
+          GHA_Meta: ${{ github.event.number }}
