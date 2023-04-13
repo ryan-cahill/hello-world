@@ -17,6 +17,21 @@ parameters:
 .job_common: &job_common
   docker:
     - image: cimg/node:18.14.1
+  pre-steps:
+    - checkout
+    - setup_remote_docker:
+        version: 20.10.18
+        docker_layer_caching: true
+    - run:
+        command: |
+          export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
+          echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
+    - run:
+        name: Install Architect CLI
+        command: npm install -g @architect-io/cli
+    - run:
+        name: Log in to Architect
+        command: architect login # environment variables are set in the UI
 
 jobs:
   create_preview:
@@ -38,23 +53,6 @@ jobs:
           name: Destroy environment
           command: architect environment:destroy preview-$PR_NUMBER --auto-approve
 
-.pre_job_common: &pre_job_common
-  pre-steps:
-    - checkout
-    - setup_remote_docker:
-        version: 20.10.18
-        docker_layer_caching: true
-    - run:
-        command: |
-          export PR_NUMBER=$(echo << pipeline.git.branch >> | sed 's/[^0-9]*//g')
-          echo "export PR_NUMBER=$PR_NUMBER" >> "$BASH_ENV"
-    - run:
-        name: Install Architect CLI
-        command: npm install -g @architect-io/cli
-    - run:
-        name: Log in to Architect
-        command: architect login # environment variables are set in the UI
-
 workflows:
   create_preview_workflow:
     when:
@@ -63,7 +61,6 @@ workflows:
         - << pipeline.parameters.GHA_Action >>
     jobs:
       - create_preview:
-          <<: *pre_job_common
   destroy_preview_workflow:
     when:
       and:
@@ -71,5 +68,4 @@ workflows:
             equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
         - << pipeline.parameters.GHA_Action >>
     jobs:
-      - destroy_preview:
-          <<: *pre_job_common
+      - destroy_preview
