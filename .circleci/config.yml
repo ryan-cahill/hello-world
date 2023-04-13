@@ -67,7 +67,9 @@ jobs:
 workflows:
   create-preview-workflow:
     when:
-      equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
+      and:
+        - equal: [ ARC_CREATE_PREVIEW, << pipeline.parameters.GHA_Meta >>]
+        - << pipeline.parameters.GHA_Action >>
     jobs: # TODO: consider adding Docker Layer Caching
       - create-preview
   destroy-preview-workflow:
