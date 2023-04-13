@@ -29,14 +29,16 @@ jobs:
       - run:
           name: Log in to Architect
           command: architect login # environment variables are set in the UI
-      - run: echo $CIRCLE_BRANCH
-      - run: echo $CIRCLE_PR_NUMBER
-      # - run:
-      #     name: Create environment
-      #     command: architect environment:create $CIRCLE_BRANCH --cluster architect # TODO: set cluster as a project var
-      # - run:
-      #     name: Deploy component
-      #     command: architect deploy architect.yml --auto-approve -e $CIRCLE_BRANCH
+      - run: # TODO: set cluster as a project var
+          name: Create environment
+          command: |
+            export PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/[^0-9]*//g')
+            architect environment:create preview-$PR_NUMBER --cluster architect --ttl=1d
+      - run:
+          name: Deploy component
+          command: |
+            export PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/[^0-9]*//g')
+            architect deploy architect.yml --auto-approve -e preview-$PR_NUMBER
   destroy-preview:
     docker:
       - image: cimg/node:18.14.1
@@ -51,7 +53,16 @@ jobs:
       - run:
           name: Log in to Architect
           command: architect login # environment variables are set in the UI
-      # TODO: delete things
+      - run:
+          name: Destroy component
+          command: |
+            export PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/[^0-9]*//g')
+            architect destroy --environment preview-$PR_NUMBER --auto-approve
+      - run:
+          name:
+          command: |
+            export PR_NUMBER=$(echo $CIRCLE_BRANCH | sed 's/[^0-9]*//g')
+            architect environment:destroy preview-$PR_NUMBER --auto-approve
 
 workflows:
   create-preview-workflow:
