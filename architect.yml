@@ -1,8 +1,10 @@
 name: hello-world
 services:
-  api:
+  hello:
     build:
       context: .
     interfaces:
       main:
+        ingress:
+          subdomain: hello
         port: 3000
