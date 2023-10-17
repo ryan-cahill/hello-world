@@ -17,7 +17,7 @@ env:
 
 jobs:
   architect_create_branch_deployments:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-jammy
     steps:
       - uses: actions/checkout@v3
         with:
@@ -40,4 +40,3 @@ jobs:
         run: architect environment:create --cluster=${{ env.CLUSTER_NAME }} --description="Architect workflow environment" ${{ env.ENVIRONMENT_NAME }}
       - name: Deploy component
         run: architect deploy --auto-approve -e ${{ env.ENVIRONMENT_NAME }} ${{ env.COMPONENT_NAME }}:latest
-
