@@ -41,4 +41,3 @@ jobs:
       - name: Deploy component
         run: architect deploy --auto-approve -e ${{ env.ENVIRONMENT_NAME }} ${{ env.COMPONENT_NAME }}:latest
 
-        
