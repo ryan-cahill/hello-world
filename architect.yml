@@ -12,8 +12,8 @@ services:
           #   - 8.8.8.8
           #   - 8.8.4.4
           # ip_whitelist: ${{ secrets.test_ip }}
-          ip_whitelist: 
-            - 108.26.152.50
+          # ip_whitelist: 
+          #   - 108.26.152.50
         port: 3000
 
 secrets:
