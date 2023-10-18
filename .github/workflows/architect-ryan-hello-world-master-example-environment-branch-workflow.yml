@@ -27,7 +27,7 @@ jobs:
           node-version: '16'
       - uses: crazy-max/ghaction-github-runtime@v2 # Exports internal envs for Github Actions. Required for register caching to work.
       - name: Install Architect CLI
-        run: npm install -g @architect-io/cli@1.43.1-arc-remove-posthog.7
+        run: npm install -g @architect-io/cli@1.44.0-arc-pin-sentry-version.1
       - name: Set Architect API endpoint
         run: architect config:set api_host https://api.dev.architect.io
       - name: Set Architect registry endpoint
