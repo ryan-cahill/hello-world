@@ -10,7 +10,6 @@ services:
           # ip_whitelist:
           #   - ${{ secrets.test_ip }}
           #   - 8.8.8.8
-          #   - 8.8.4.4
           # ip_whitelist: ${{ secrets.test_ip }}
           # ip_whitelist: 
           #   - 108.26.152.50
@@ -19,4 +18,3 @@ services:
 secrets:
   test_ip:
     required: false
-#     required: true
