@@ -33,10 +33,10 @@ jobs:
       - name: Set Architect registry endpoint
         run: architect config:set registry_host registry.dev.architect.io
       - name: Login to Architect Cloud
-        run: DEBUG=* architect login -e ${{ secrets.ARCHITECT_EMAIL }} -p ${{ secrets.ARCHITECT_PASSWORD }} # These secrets were created on your behalf
+        run: architect login -e ${{ secrets.ARCHITECT_EMAIL }} -p ${{ secrets.ARCHITECT_PASSWORD }} # These secrets were created on your behalf
       - name: Register component w/ Architect
-        run: DEBUG=* architect register ${{ env.COMPONENT_FILE_PATH }} -t latest
+        run: architect register ${{ env.COMPONENT_FILE_PATH }} -t latest
       - name: An environment created automatically by a GitHub branch workflow to facilitate automated component deployments
-        run: DEBUG=* architect environment:create --cluster=${{ env.CLUSTER_NAME }} --description="Architect workflow environment" ${{ env.ENVIRONMENT_NAME }}
+        run: architect environment:create --cluster=${{ env.CLUSTER_NAME }} --description="Architect workflow environment" ${{ env.ENVIRONMENT_NAME }}
       - name: Deploy component
-        run: DEBUG=* architect deploy --auto-approve -e ${{ env.ENVIRONMENT_NAME }} ${{ env.COMPONENT_NAME }}:latest
+        run: architect deploy --auto-approve -e ${{ env.ENVIRONMENT_NAME }} ${{ env.COMPONENT_NAME }}:latest
